@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Task</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #3498db, #2ecc71);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      width: 400px;
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    h2 {
+      color: #2ecc71;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 8px;
+      color: #333;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    input,
+    select {
+      width: calc(100% - 24px);
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #3498db;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    input[type="submit"] {
+      background: #2ecc71;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+      background: #27ae60;
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var today = new Date().toISOString().split('T')[0];
+      document.getElementById('startDate').min = today;
+      document.getElementById('endDate').min = today;
+    });
+  </script>
+</head>
+<body>
+<form action="/addtask" method="post">
+  <h2>Enter the Details</h2>
+  <label for="task">Task</label>
+  <input id="task" placeholder="Enter the Task Name" type="text" name="name" required />
+
+  <label for="startDate">Select Start Date</label>
+  <input id="startDate" type="date" name="startDate" min="" required />
+
+  <label for="endDate">Select End Date</label>
+  <input id="endDate" type="date" name="endDate" required />
+
+  <label>Set Priority</label>
+  <select id="priority" name="priority" required>
+    <option value="">-select-</option>
+    <option value="low">Low</option>
+    <option value="normal">Normal</option>
+    <option value="high">High</option>
+  </select>
+
+  <label for="difficulty">Difficulty</label>
+  <select id="difficulty" name="difficulty" required>
+    <option value="">-select-</option>
+    <option value="easy">Easy</option>
+    <option value="medium">Medium</option>
+    <option value="hard">Hard</option>
+  </select>
+
+  <input type="hidden" name="userId" value="someUserId" />
+
+  <input type="submit" value="Submit" id="submit" />
+</form>
+</body>
+</html>

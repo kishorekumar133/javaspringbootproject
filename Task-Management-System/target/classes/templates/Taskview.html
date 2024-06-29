@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Achievements To Do</title>
+
+    <style>
+        body {
+            background: linear-gradient(to right, #d0ff00, #ff6d2e);
+            background-position-y: 100px;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .top-right-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 80px; /* Adjusted for top space */
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #fc9003;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        form {
+            display: inline;
+            margin: 0;
+        }
+
+        #delete {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        #delete:hover {
+            background-color: #c82333;
+        }
+
+        #addTask1, #logout {
+            background-color: #fc9003;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.3s;
+            margin-left: 10px; /* Added spacing between buttons */
+        }
+
+        #addTask1:hover, #logout:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function confirmDelete(taskId) {
+            if (confirm('Are you sure you want to delete this task?')) {
+                document.getElementById('deleteForm-' + taskId).submit();
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="top-right-buttons">
+    <form id="addTaskForm" action="/addtask">
+        <input type="submit" value="Add Task" id="addTask1"/>
+    </form>
+    <form id="logoutForm" action="/login">
+        <input type="submit" value="Logout" id="logout"/>
+    </form>
+</div>
+<table id="TaskTable">
+    <thead>
+    <tr>
+        <th>Task Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Priority</th>
+        <th>Difficulty</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${taskList}">
+        <td th:text="${task['Task Name']}"></td>
+        <td th:text="${task['Start Date']}"></td>
+        <td th:text="${task['End Date']}"></td>
+        <td th:text="${task['Priority']}"></td>
+        <td th:text="${task['Difficulty']}"></td>
+        <td>
+            <form th:action="@{/delete}" method="post">
+                <input type="hidden" name="taskId" th:value="${task['Task Name']}"/>
+                <input type="submit" value="Delete" id="delete"/>
+                <span th:text="${message}"></span>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
